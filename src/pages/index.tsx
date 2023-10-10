@@ -1,3 +1,4 @@
+import { Card } from "@/components/Card";
 import Modal from "@/components/modal/modal";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -48,14 +49,7 @@ function Home() {
       <button>Adicionar</button>
       <ul>
         {recipes.map((recipe) => (
-          <li key={recipe.id}>
-            <h2>{recipe.data.name}</h2>
-            <p>{recipe.id}</p>
-            <p>{recipe.data.preparation}</p>
-            <p>Tempo de preparo: {recipe.data.preparationTime}</p>
-            <p>Ingredientes: {recipe.data.ingredients}</p>
-            <Link href={`/${recipe.id}`}>Ver mais</Link>
-          </li>
+            <Card  key={recipe.id} recipe={recipe} />
         ))}
       </ul>
     </div>
