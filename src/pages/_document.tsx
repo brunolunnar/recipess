@@ -1,10 +1,9 @@
-
 import { getCssText } from "@/styles";
 import { globalStyle } from "@/styles/global";
 import { Html, Head, Main, NextScript } from "next/document";
 
+globalStyle();
 export default function Document() {
-  globalStyle();
   return (
     <Html lang="en">
       <Head>
@@ -24,11 +23,10 @@ export default function Document() {
         ></style>
       </Head>
       <body>
- 
-        <Main/>
-
+        <Main />
         <NextScript />
       </body>
     </Html>
   );
 }
+

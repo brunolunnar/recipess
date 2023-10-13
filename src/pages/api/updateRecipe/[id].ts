@@ -1,3 +1,4 @@
+import { error } from "console";
 import { query as q, Client } from "faunadb";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -13,18 +14,27 @@ export default async function handler(
       const { id } = req.query;
 
       if (typeof id !== "string" || id === undefined) {
-        return res.status(400).json({ error: "O parâmetro de rota 'id' deve ser uma string." });
+        return res
+          .status(400)
+          .json({ error: "O parâmetro de rota 'id' deve ser uma string." });
       }
 
       if (!client) {
-        return res.status(500).json({ error: "A variável de ambiente FAUNADB_SECRET_KEY não está definida." });
+        return res
+          .status(500)
+          .json({
+            error:
+              "A variável de ambiente FAUNADB_SECRET_KEY não está definida.",
+          });
       }
 
       const updatedData = req.body;
 
       const dbs = await client.query<IFaunaDBResponse>(
         q.Update(q.Ref(q.Collection("recipe"), id), { data: updatedData })
-      );
+      ).catch(error=>{
+        return res.status(404).json({error:error.message})
+      });
 
       if (!dbs.data) {
         return res.status(404).json({ error: "Receita não encontrada." });

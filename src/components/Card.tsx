@@ -2,20 +2,9 @@ import { CardContainer } from "@/styles/components/Card";
 import Bolo from "../assets/img/bolo.jpg";
 import Image from "next/image";
 import Link from "next/link";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
-interface IRecipe {
-  id: string;
-  ts: number;
-  ref: {
-    id: string;
-  };
-  data: {
-    name: string;
-    preparation: string;
-    preparationTime: string;
-    ingredients: string;
-  };
-}
+
 
 interface ICardProps {
   recipe: IRecipe;
@@ -25,7 +14,7 @@ export const Card = ({ recipe }: ICardProps) => {
   return (
     <CardContainer>
       <Image
-        src={Bolo}
+        src={recipe.data.img!}
         width={150}
         height={150}
         alt="imagem de um bolo"

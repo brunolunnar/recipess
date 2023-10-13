@@ -9,6 +9,7 @@ interface IRecipe {
       preparation: string;
       preparationTime: string;
       ingredients: string;
+      img:string
     };
   }
 
@@ -20,6 +21,7 @@ interface IRecipe {
     ingredients: string;
     ts?: string;
     currentData?:undefined;
+    img:string
   }
 
   
@@ -30,3 +32,16 @@ interface IRecipe {
     ts: number;
     data: IRecipeData;
   }
+  interface FaunaDBResponse {
+    data: {
+      name: string;
+      preparation: string;
+      preparationTime: string;
+      ingredients: string;
+      img:string
+    };
+  }
+  interface IFaunaDataResponse {
+    data: IRecipe[];
+  }
+  

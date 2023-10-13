@@ -9,13 +9,14 @@ globalStyle();
 
 export default function Register() {
   const [formData, setFormData] = useState({
+    img: "",
     name: "",
     preparation: "",
     preparationTime: "",
     ingredients: "",
   });
   const [alertMessage, setAlertMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false); // Novo estado
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,7 +29,6 @@ export default function Register() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Validar se todos os campos estão preenchidos
     if (
       formData.name === "" ||
       formData.preparation === "" ||
@@ -39,7 +39,7 @@ export default function Register() {
       return;
     }
 
-    setIsSubmitting(true); // Ative ao enviar o formulário
+    setIsSubmitting(true);
 
     try {
       const response = await fetch("/api/createRecipe", {
@@ -54,6 +54,7 @@ export default function Register() {
         console.log("Receita cadastrada com sucesso!");
         setAlertMessage("Receita cadastrada com sucesso!");
         setFormData({
+          img: "",
           name: "",
           preparation: "",
           preparationTime: "",
@@ -67,7 +68,7 @@ export default function Register() {
       console.error("Erro na requisição:", error);
       setAlertMessage("Erro na requisição.");
     } finally {
-      setIsSubmitting(false); // Desative após a conclusão da solicitação
+      setIsSubmitting(false);
     }
   };
 
@@ -92,6 +93,14 @@ export default function Register() {
               type="text"
               name="preparation"
               value={formData.preparation}
+              onChange={handleChange}
+            />
+
+            <label htmlFor="img">Imagem do produto</label>
+            <input
+              type="text"
+              name="img"
+              value={formData.img}
               onChange={handleChange}
             />
 

@@ -11,38 +11,18 @@ if (!secret) {
 
 const client = new Client({ secret });
 
-interface FaunaDBResponse {
-  data: IRecipe[];
-}
-
-interface IRecipeData {
-  name: string;
-  preparation: string;
-  preparationTime: string;
-  ingredients: string;
-}
-
-interface IRecipe {
-  id: string;
-  ts: number;
-  ref: {
-    id: string;
-  };
-  data: IRecipeData;
-}
-
 export default async (_req: Request, res: Response) => {
   try {
-    const dbs = await client.query<FaunaDBResponse>(
-      q.Map(
-        q.Paginate(q.Documents(q.Collection("recipe"))),
-        (ref) => q.Get(ref)
+    const dbs = await client.query<IFaunaDataResponse>(
+      q.Map(q.Paginate(q.Documents(q.Collection("recipe"))), (ref) =>
+        q.Get(ref)
       )
     );
 
     const recipes: IRecipe[] = dbs.data.map((item) => {
       const id = item.ref.id;
-      const { name, preparation, preparationTime, ingredients } = item.data || {};
+      const { name, preparation, preparationTime, ingredients } =
+        item.data || {};
 
       return {
         id,
@@ -51,7 +31,7 @@ export default async (_req: Request, res: Response) => {
           id,
         },
         data: {
-          name: name || "", // Defina um valor padrão vazio se 'name' não estiver definido
+          name: name || "",
           preparation: preparation || "",
           preparationTime: preparationTime || "",
           ingredients: ingredients || "",

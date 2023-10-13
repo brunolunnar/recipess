@@ -12,21 +12,10 @@ if (!secret) {
 
 const client = new Client({ secret });
 
-interface IRecipe {
-  name: string;
-  preparation: string;
-  preparationTime: string;
-  ingredients: string;
-}
-
-// Rota POST para adicionar uma nova receita
 export default async (req: Request, res: Response) => {
   try {
-    const { name, preparation, preparationTime, ingredients } = req.body; // Obtenha os dados da solicitação
+    const { name, preparation, preparationTime, ingredients, img } = req.body;
 
-    // Valide os dados, se necessário
-
-    // Crie um novo documento no FaunaDB
     const result = await client.query(
       q.Create(q.Collection("recipe"), {
         data: {
@@ -34,11 +23,12 @@ export default async (req: Request, res: Response) => {
           preparation,
           preparationTime,
           ingredients,
+          img
         },
       })
     );
 
-    res.status(201).json(result); // Responda com o resultado da criação
+    res.status(201).json(result);
   } catch (error) {
     res.status(500).json({ error: (error as Error).message });
   }
