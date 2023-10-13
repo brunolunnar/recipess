@@ -1,3 +1,4 @@
+import  Link  from "next/link";
 import React, { useState } from "react";
 
 export default function Register() {
@@ -8,8 +9,9 @@ export default function Register() {
     ingredients: "",
   });
   const [alertMessage, setAlertMessage] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: { target: { name: any; value: any; }; }) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -17,8 +19,19 @@ export default function Register() {
     });
   };
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+
+    // Validar se todos os campos estão preenchidos
+    if (
+      formData.name === "" ||
+      formData.preparation === "" ||
+      formData.preparationTime === "" ||
+      formData.ingredients === ""
+    ) {
+      setAlertMessage("Por favor, preencha todos os campos.");
+      return;
+    }
 
     try {
       const response = await fetch("/api/createRecipe", {
@@ -51,6 +64,7 @@ export default function Register() {
   return (
     <>
       <h1>Oi eu sou um registro de receitas</h1>
+      <Link href={"/"}>Voltar</Link>
       {alertMessage && <p>{alertMessage}</p>}
       <form onSubmit={handleSubmit}>
         <input
@@ -81,7 +95,9 @@ export default function Register() {
           value={formData.ingredients}
           onChange={handleChange}
         />
-        <button type="submit">Cadastrar Receita</button>
+        <button type="submit" disabled={isFormValid}>
+          Cadastrar Receita
+        </button>
       </form>
     </>
   );

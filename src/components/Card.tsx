@@ -24,12 +24,19 @@ interface ICardProps {
 export const Card = ({ recipe }: ICardProps) => {
   return (
     <CardContainer>
-      <h2>{recipe.data.name}</h2>
-      <p>{recipe.id}</p>
-      <p>{recipe.data.preparation}</p>
-      <p>Tempo de preparo: {recipe.data.preparationTime}</p>
-      <p>Ingredientes: {recipe.data.ingredients}</p>
-      <Link href={`/${recipe.id}`}>Ver mais</Link>
+      <Image
+        src={Bolo}
+        width={150}
+        height={150}
+        alt="imagem de um bolo"
+      ></Image>
+      <div className="box">
+        <div className="time-box">
+          <p>{recipe.data.preparationTime}</p>
+        </div>
+        <h2>{recipe.data.name}</h2>
+        <Link href={`/${recipe.id}`}>Ver receita</Link>
+      </div>
     </CardContainer>
   );
 };

@@ -1,33 +1,12 @@
 import { Card } from "@/components/Card";
-import Modal from "@/components/modal/modal";
-import Link from "next/link";
+import { Header } from "@/components/Header";
+import { globalStyle } from "@/styles/global";
+import { MainContainer } from "@/styles/main";
 import React, { useEffect, useState } from "react";
 
-interface IRecipe {
-  id: string;
-  ts: number;
-  ref: {
-    id: string;
-  };
-  data: {
-    name: string;
-    preparation: string;
-    preparationTime: string;
-    ingredients: string;
-  };
-}
-
+globalStyle();
 function Home() {
   const [recipes, setRecipes] = useState<IRecipe[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
 
   useEffect(() => {
     async function fetchData() {
@@ -44,15 +23,14 @@ function Home() {
   }, []);
 
   return (
-    <div>
-      <h1>Receitas</h1>
-      <button>Adicionar</button>
-      <ul>
+    <>
+     <Header/>
+      <MainContainer>
         {recipes.map((recipe) => (
-            <Card  key={recipe.id} recipe={recipe} />
+          <Card key={recipe.id} recipe={recipe} />
         ))}
-      </ul>
-    </div>
+      </MainContainer>
+    </>
   );
 }
 
