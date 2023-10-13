@@ -19,6 +19,7 @@ interface IRecipe {
     preparationTime: string;
     ingredients: string;
     ts?: string;
+    currentData?:undefined;
   }
 
   

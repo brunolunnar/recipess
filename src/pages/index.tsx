@@ -1,12 +1,15 @@
 import { Card } from "@/components/Card";
+import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { globalStyle } from "@/styles/global";
 import { MainContainer } from "@/styles/main";
 import React, { useEffect, useState } from "react";
 
 globalStyle();
+
 function Home() {
   const [recipes, setRecipes] = useState<IRecipe[]>([]);
+  const itemsArray: never[] = [ /* Seus itens ou dados aqui */ ];
 
   useEffect(() => {
     async function fetchData() {
@@ -24,12 +27,13 @@ function Home() {
 
   return (
     <>
-     <Header/>
+      <Header items={itemsArray} />
       <MainContainer>
         {recipes.map((recipe) => (
           <Card key={recipe.id} recipe={recipe} />
         ))}
       </MainContainer>
+      <Footer/>
     </>
   );
 }

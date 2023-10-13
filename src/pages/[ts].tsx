@@ -4,7 +4,17 @@ import { useEffect, useState } from "react";
 import UpdateModal from "@/components/modal/updateModal";
 import { DeleteModal } from "@/components/modal/deleteModal";
 import { globalStyle } from "@/styles/global";
+import { toast } from "react-toastify";
+import { Toastify } from "@/components/toast";
+import "react-toastify/dist/ReactToastify.css";
+import { MainRecipeIdContainer } from "@/styles/recipeId";
+import { Footer } from "@/components/Footer";
+import Bolo from "../assets/img/bolo.jpg";
+import Image from "next/image";
+import { DeleteModalButton, DeleteModalCancelButton } from "@/styles/components/Modal/deleteModal";
+
 globalStyle();
+
 export default function Recipe() {
   const router = useRouter();
   const id = router.query.ts;
@@ -22,11 +32,11 @@ export default function Recipe() {
             const data = await response.json();
             setRecipe(data.data);
           } else {
-            console.error('Erro ao buscar receita.');
+            console.error("Erro ao buscar receita.");
           }
         }
       } catch (error) {
-        console.error('Erro na requisição:', error);
+        console.error("Erro na requisição:", error);
       } finally {
         setLoading(false);
       }
@@ -58,11 +68,14 @@ export default function Recipe() {
       if (response.ok) {
         const updatedRecipe = { ...recipe, ...newData };
         setRecipe(updatedRecipe);
+        toast.success("Receita atualizada com sucesso");
       } else {
-        console.error('Erro ao atualizar receita.');
+        console.error("Erro ao atualizar receita.");
+        toast.error("Erro ao atualizar receita");
       }
     } catch (error) {
-      console.error('Erro na requisição de atualização:', error);
+      console.error("Erro na requisição de atualização:", error);
+      toast.error("Erro na requisição de atualização");
     } finally {
       setUpdateModalOpen(false);
     }
@@ -76,11 +89,14 @@ export default function Recipe() {
 
       if (response.ok) {
         router.push("/");
+        toast.success("Receita excluída com sucesso");
       } else {
-        console.error('Erro ao excluir receita.');
+        console.error("Erro ao excluir receita.");
+        toast.error("Erro ao excluir receita");
       }
     } catch (error) {
-      console.error('Erro na requisição de exclusão:', error);
+      console.error("Erro na requisição de exclusão:", error);
+      toast.error("Erro na requisição de exclusão");
     } finally {
       setDeleteModalOpen(false);
     }
@@ -90,26 +106,56 @@ export default function Recipe() {
     <>
       <Header />
 
-      <div>
-        <button onClick={openUpdateModal}>Atualizar</button>
-        <button onClick={openDeleteModal}>Deletar</button>
-        {loading ? (
-          <p>Carregando...</p>
-        ) : (
-          recipe ? (
+      <MainRecipeIdContainer>
+        <div>
+          {loading ? (
+            <p>Carregando...</p>
+          ) : recipe ? (
             <>
+              <Image
+                src={Bolo}
+                width={500}
+                height={306}
+                alt="iamgem do bolo"
+              ></Image>
               <h1>{recipe.name}</h1>
-              <p>{recipe.preparation || ''}</p>
-              <p>{recipe.preparationTime || ''}</p>
-              <p>{recipe.ingredients || ''}</p>
+              <div className="buttons-box">
+
+              <DeleteModalCancelButton onClick={openUpdateModal}>Atualizar</DeleteModalCancelButton>
+              <DeleteModalButton onClick={openDeleteModal}>Deletar</DeleteModalButton>
+              </div>
+              <div className="information-box">
+                <div className="prep">
+                  <h2>Modo de preparo</h2>
+                  <p>{recipe.preparation || ""}</p>
+                </div>
+                <div className="ingri">
+                  <h2>Tempo de preparo</h2>
+                  <p>{recipe.preparationTime || ""}</p>
+                  <h2>Ingredientes</h2>
+                  <p>{recipe.ingredients || ""}</p>
+                </div>
+              </div>
             </>
           ) : (
             <p>Receita não encontrada.</p>
-          )
-        )}
-      </div>
-      <UpdateModal isOpen={isUpdateModalOpen} onUpdate={handleUpdate} onCancel={() => setUpdateModalOpen(false)} recipeId={id} />
-      <DeleteModal isOpen={isDeleteModalOpen} onDelete={handleDelete} onCancel={() => setDeleteModalOpen(false)} />
+          )}
+        </div>
+        <UpdateModal
+          isOpen={isUpdateModalOpen}
+          onUpdate={handleUpdate}
+          onCancel={() => setUpdateModalOpen(false)}
+          recipeId={id}
+          currentData={undefined}
+        />
+        <DeleteModal
+          isOpen={isDeleteModalOpen}
+          onDelete={handleDelete}
+          onCancel={() => setDeleteModalOpen(false)}
+        />
+        <Toastify></Toastify>
+      </MainRecipeIdContainer>
+      <Footer />
     </>
   );
 }

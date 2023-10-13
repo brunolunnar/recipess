@@ -1,5 +1,11 @@
-import  Link  from "next/link";
-import React, { useState } from "react";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { FormContainer } from "@/styles/components/Form";
+import { globalStyle } from "@/styles/global";
+import { DivContainer, MainContainer } from "@/styles/main";
+import React, { ChangeEvent, FormEvent, useState } from "react";
+
+globalStyle();
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -9,9 +15,9 @@ export default function Register() {
     ingredients: "",
   });
   const [alertMessage, setAlertMessage] = useState("");
-  const [isFormValid, setIsFormValid] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Novo estado
 
-  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -19,7 +25,7 @@ export default function Register() {
     });
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Validar se todos os campos estão preenchidos
@@ -32,6 +38,8 @@ export default function Register() {
       setAlertMessage("Por favor, preencha todos os campos.");
       return;
     }
+
+    setIsSubmitting(true); // Ative ao enviar o formulário
 
     try {
       const response = await fetch("/api/createRecipe", {
@@ -58,47 +66,58 @@ export default function Register() {
     } catch (error) {
       console.error("Erro na requisição:", error);
       setAlertMessage("Erro na requisição.");
+    } finally {
+      setIsSubmitting(false); // Desative após a conclusão da solicitação
     }
   };
 
   return (
     <>
-      <h1>Oi eu sou um registro de receitas</h1>
-      <Link href={"/"}>Voltar</Link>
-      {alertMessage && <p>{alertMessage}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          placeholder="preparation"
-          name="preparation"
-          value={formData.preparation}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          placeholder="preparationTime"
-          name="preparationTime"
-          value={formData.preparationTime}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          placeholder="ingredients"
-          name="ingredients"
-          value={formData.ingredients}
-          onChange={handleChange}
-        />
-        <button type="submit" disabled={isFormValid}>
-          Cadastrar Receita
-        </button>
-      </form>
+      <Header />
+      <MainContainer>
+        <DivContainer>
+          <h1>Registre aqui sua receita! &#128523;</h1>
+          {alertMessage && <p>{alertMessage}</p>}
+          <FormContainer onSubmit={handleSubmit}>
+            <label htmlFor="name">Nome</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+
+            <label htmlFor="preparation">Modo de preparo</label>
+            <input
+              type="text"
+              name="preparation"
+              value={formData.preparation}
+              onChange={handleChange}
+            />
+
+            <label htmlFor="preparationTime">Tempo de Preparo</label>
+            <input
+              type="text"
+              name="preparationTime"
+              value={formData.preparationTime}
+              onChange={handleChange}
+            />
+
+            <label htmlFor="ingredients">Ingredientes</label>
+            <input
+              type="text"
+              name="ingredients"
+              value={formData.ingredients}
+              onChange={handleChange}
+            />
+
+            <button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Aguarde..." : "Cadastrar Receita"}
+            </button>
+          </FormContainer>
+        </DivContainer>
+      </MainContainer>
+      <Footer />
     </>
   );
 }

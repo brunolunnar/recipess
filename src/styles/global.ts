@@ -21,7 +21,9 @@ export const globalStyle = globalCss({
       backgroundPosition:'center',
       backgroundRepeat:'no-repeat',
       backgroundSize:'cover',
-      
+      background:'Beige',
+      fontFamily:'Jua',
+   
     },
     "ol, ul": {
       listStyle: "none",

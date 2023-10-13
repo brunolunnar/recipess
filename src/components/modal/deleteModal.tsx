@@ -8,6 +8,7 @@ import {
   DeleteModalCancelButton,
 } from "@/styles/components/Modal/deleteModal";
 import { useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
 
 export const DeleteModal = ({ isOpen, onDelete, onCancel }: any) => {
   return (
