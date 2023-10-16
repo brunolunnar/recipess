@@ -70,7 +70,7 @@ export default function UpdateModal({
   };
 
   const isValidPreparationTime = (time: string) => {
-    // Utilize uma expressão regular para verificar se o tempo possui 2 dígitos numéricos.
+ 
     return /^\d{2}$/.test(time);
   };
 

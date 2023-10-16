@@ -40,7 +40,7 @@ export const Header = ({ items }:any) => {
         <ButtonContainer>
     
           <DeleteModalCancelButton onClick={handleRegister}>
-            Cadastro
+            Cadastre uma receita
           </DeleteModalCancelButton>
         </ButtonContainer>
 
