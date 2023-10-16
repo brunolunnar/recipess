@@ -9,7 +9,7 @@ globalStyle();
 
 function Home() {
   const [recipes, setRecipes] = useState<IRecipe[]>([]);
-  const itemsArray: never[] = [ /* Seus itens ou dados aqui */ ];
+  const itemsArray: never[] = [];
 
   useEffect(() => {
     async function fetchData() {

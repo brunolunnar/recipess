@@ -113,10 +113,10 @@ export default function Recipe() {
           ) : recipe ? (
             <>
               <Image
-                src={Bolo}
+                src={recipe.img}
                 width={500}
                 height={306}
-                alt="iamgem do bolo"
+                alt="imagem do bolo"
               ></Image>
               <h1>{recipe.name}</h1>
               <div className="buttons-box">

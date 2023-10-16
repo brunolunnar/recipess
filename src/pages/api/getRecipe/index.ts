@@ -21,7 +21,7 @@ export default async (_req: Request, res: Response) => {
 
     const recipes: IRecipe[] = dbs.data.map((item) => {
       const id = item.ref.id;
-      const { name, preparation, preparationTime, ingredients } =
+      const { name, preparation, preparationTime, ingredients, img } =
         item.data || {};
 
       return {
@@ -35,6 +35,7 @@ export default async (_req: Request, res: Response) => {
           preparation: preparation || "",
           preparationTime: preparationTime || "",
           ingredients: ingredients || "",
+          img: img || "",
         },
       };
     });

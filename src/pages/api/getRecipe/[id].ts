@@ -4,20 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 const secret = process.env.FAUNADB_SECRET_KEY;
 const client = secret ? new Client({ secret }) : null;
 
-interface IRecipeData {
-  name: string;
-  preparation: string;
-  preparationTime: string;
-  ingredients: string;
-}
 
-interface IFaunaDBResponse {
-  ref: {
-    id: string;
-  };
-  ts: number;
-  data: IRecipeData;
-}
 
 export default async function handler(
   req: NextApiRequest,

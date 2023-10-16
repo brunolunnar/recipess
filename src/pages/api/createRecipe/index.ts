@@ -1,4 +1,3 @@
-// Importe as bibliotecas necessárias
 import { query as q, Client } from "faunadb";
 import { Request, Response } from "express";
 

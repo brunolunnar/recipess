@@ -96,7 +96,7 @@ export default function Register() {
               onChange={handleChange}
             />
 
-            <label htmlFor="img">Imagem do produto</label>
+            <label htmlFor="img">Foto do produto</label>
             <input
               type="text"
               name="img"
@@ -126,6 +126,7 @@ export default function Register() {
           </FormContainer>
         </DivContainer>
       </MainContainer>
+      {console.log(formData)}
       <Footer />
     </>
   );

@@ -4,13 +4,17 @@ import { NextApiRequest, NextApiResponse } from "next";
 const secret = process.env.FAUNADB_SECRET_KEY;
 const client = secret ? new Client({ secret }) : null;
 
+
 interface FaunaDBResponse {
-  data: {
-    name: string;
-    preparation: string;
-    preparationTime: string;
-    ingredients: string;
-  };
+  data:{
+    id: string,
+		ts?: string,
+		name: string,
+		preparation: string,
+		preparationTime: string,
+		ingredients: string,
+		img: string
+  }; 
 }
 
 export default async function handler(
