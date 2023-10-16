@@ -4,8 +4,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 const secret = process.env.FAUNADB_SECRET_KEY;
 const client = secret ? new Client({ secret }) : null;
 
-
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -14,11 +12,17 @@ export default async function handler(
     const { id } = req.query;
 
     if (typeof id !== "string" || id === undefined) {
-      return res.status(400).json({ error: "O parâmetro de rota 'id' deve ser uma string." });
+      return res
+        .status(400)
+        .json({ error: "O parâmetro de rota 'id' deve ser uma string." });
     }
 
     if (!client) {
-      return res.status(500).json({ error: "A variável de ambiente FAUNADB_SECRET_KEY não está definida." });
+      return res
+        .status(500)
+        .json({
+          error: "A variável de ambiente FAUNADB_SECRET_KEY não está definida.",
+        });
     }
 
     const dbs = await client.query<IFaunaDBResponse>(

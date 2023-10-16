@@ -32,6 +32,7 @@ export default function UpdateModal({
       preparation: "",
       preparationTime: "",
       ingredients: "",
+      img:""
     }
   );
 

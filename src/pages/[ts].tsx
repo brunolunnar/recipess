@@ -11,7 +11,11 @@ import { MainRecipeIdContainer } from "@/styles/recipeId";
 import { Footer } from "@/components/Footer";
 import Bolo from "../assets/img/bolo.jpg";
 import Image from "next/image";
-import { DeleteModalButton, DeleteModalCancelButton } from "@/styles/components/Modal/deleteModal";
+import {
+  DeleteModalButton,
+  DeleteModalCancelButton,
+} from "@/styles/components/Modal/deleteModal";
+import { Loading } from "@/components/loading";
 
 globalStyle();
 
@@ -104,57 +108,58 @@ export default function Recipe() {
 
   return (
     <>
-      <Header />
+      <Header items={undefined} />
 
-      <MainRecipeIdContainer>
-        <div>
-          {loading ? (
-            <p>Carregando...</p>
-          ) : recipe ? (
-            <>
-              <Image
-                src={recipe.img}
-                width={500}
-                height={306}
-                alt="imagem do bolo"
-              ></Image>
-              <h1>{recipe.name}</h1>
-              <div className="buttons-box">
+      {loading ? (
+        <Loading />
+      ) : recipe ? (
+        <MainRecipeIdContainer>
+          <Image
+            src={recipe.img}
+            width={500}
+            height={306}
+            alt="imagem do bolo"
+          ></Image>
 
-              <DeleteModalCancelButton onClick={openUpdateModal}>Atualizar</DeleteModalCancelButton>
-              <DeleteModalButton onClick={openDeleteModal}>Deletar</DeleteModalButton>
-              </div>
-              <div className="information-box">
-                <div className="prep">
-                  <h2>Modo de preparo</h2>
-                  <p>{recipe.preparation || ""}</p>
-                </div>
-                <div className="ingri">
-                  <h2>Tempo de preparo</h2>
-                  <p>{recipe.preparationTime || ""}</p>
-                  <h2>Ingredientes</h2>
-                  <p>{recipe.ingredients || ""}</p>
-                </div>
-              </div>
-            </>
-          ) : (
-            <p>Receita não encontrada.</p>
-          )}
-        </div>
-        <UpdateModal
-          isOpen={isUpdateModalOpen}
-          onUpdate={handleUpdate}
-          onCancel={() => setUpdateModalOpen(false)}
-          recipeId={id}
-          currentData={undefined}
-        />
-        <DeleteModal
-          isOpen={isDeleteModalOpen}
-          onDelete={handleDelete}
-          onCancel={() => setDeleteModalOpen(false)}
-        />
-        <Toastify></Toastify>
-      </MainRecipeIdContainer>
+          <h1 className="title">{recipe.name}</h1>
+          <div className="buttons-box">
+            <DeleteModalCancelButton onClick={openUpdateModal}>
+              Atualizar
+            </DeleteModalCancelButton>
+            <DeleteModalButton onClick={openDeleteModal}>
+              Deletar
+            </DeleteModalButton>
+          </div>
+          <div className="information-box">
+            <div className="prep">
+              <h2>Modo de preparo</h2>
+              <p>{recipe.preparation || ""}</p>
+            </div>
+            <div className="ingri">
+              <h2>Tempo de preparo</h2>
+              <p>{recipe.preparationTime || ""}</p>
+              <h2>Ingredientes</h2>
+              <p>{recipe.ingredients || ""}</p>
+            </div>
+          </div>
+        </MainRecipeIdContainer>
+      ) : (
+        <p>Receita não encontrada.</p>
+      )}
+
+      <UpdateModal
+        isOpen={isUpdateModalOpen}
+        onUpdate={handleUpdate}
+        onCancel={() => setUpdateModalOpen(false)}
+        recipeId={id}
+        currentData={undefined}
+      />
+      <DeleteModal
+        isOpen={isDeleteModalOpen}
+        onDelete={handleDelete}
+        onCancel={() => setDeleteModalOpen(false)}
+      />
+      <Toastify></Toastify>
       <Footer />
     </>
   );

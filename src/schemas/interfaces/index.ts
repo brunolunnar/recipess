@@ -1,17 +1,17 @@
 interface IRecipe {
+  id: string;
+  ts: number;
+  ref: {
     id: string;
-    ts: number;
-    ref: {
-      id: string;
-    };
-    data: {
-      name: string;
-      preparation: string;
-      preparationTime: string;
-      ingredients: string;
-      img:string
-    };
-  }
+  };
+  data: {
+    name: string;
+    preparation: string;
+    preparationTime: string;
+    ingredients: string;
+    img?: string | undefined; // Torna img opcional
+  };
+}
 
   interface IRecipeData {
     id?: string;

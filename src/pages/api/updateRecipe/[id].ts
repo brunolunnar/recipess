@@ -32,10 +32,7 @@ export default async function handler(
 
       const dbs = await client.query<IFaunaDBResponse>(
         q.Update(q.Ref(q.Collection("recipe"), id), { data: updatedData })
-      ).catch(error=>{
-        return res.status(404).json({error:error.message})
-      });
-
+      );
       if (!dbs.data) {
         return res.status(404).json({ error: "Receita não encontrada." });
       }

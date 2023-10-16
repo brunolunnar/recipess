@@ -4,19 +4,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 const secret = process.env.FAUNADB_SECRET_KEY;
 const client = secret ? new Client({ secret }) : null;
 
-
-interface FaunaDBResponse {
-  data:{
-    id: string,
-		ts?: string,
-		name: string,
-		preparation: string,
-		preparationTime: string,
-		ingredients: string,
-		img: string
-  }; 
-}
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -32,12 +19,9 @@ export default async function handler(
       }
 
       if (!client) {
-        return res
-          .status(500)
-          .json({
-            error:
-              "A variável de ambiente FAUNADB_SECRET_KEY não está definida.",
-          });
+        return res.status(500).json({
+          error: "A variável de ambiente FAUNADB_SECRET_KEY não está definida.",
+        });
       }
 
       const dbs: FaunaDBResponse = await client.query(

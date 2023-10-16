@@ -6,6 +6,6 @@ const nextConfig = {
 module.exports = nextConfig
 module.exports = {
   images: {
-    domains: ['img.elo7.com.br','www.sabornamesa.com.br', '*'],
+    domains: ['img.elo7.com.br','www.sabornamesa.com.br', '*','cdn.ome.lt','www.docemeldoces.com','encrypted-tbn0.gstatic.com','vovopalmirinha.com.br','www.estadao.com.br'],
   },
 };

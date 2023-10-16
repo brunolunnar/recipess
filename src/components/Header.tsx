@@ -3,7 +3,7 @@ import { useRouter } from "next/router"; // Importe o hook useRouter
 import Image from "next/image";
 import Logo from '@/assets/img/logo.png';
 import { HeaderContainer, Container, ButtonContainer } from "@/styles/components/Header";
-import { DeleteModalButton, DeleteModalCancelButton } from "@/styles/components/Modal/deleteModal";
+import {  DeleteModalCancelButton } from "@/styles/components/Modal/deleteModal";
 
 export const Header = ({ items }:any) => {
   const router = useRouter();
@@ -33,26 +33,17 @@ export const Header = ({ items }:any) => {
   return (
     <HeaderContainer>
       <Container>
-        <div>
-          <Image src={Logo} width={150} height={150} alt="logo do site" />
-          <h1>Receitas</h1>
+        <div className="box">
+    
+          <h1 onClick={handleHome}>Next Receitas</h1>
         </div>
         <ButtonContainer>
-          <DeleteModalButton onClick={handleHome}>Home</DeleteModalButton>
+    
           <DeleteModalCancelButton onClick={handleRegister}>
             Cadastro
           </DeleteModalCancelButton>
         </ButtonContainer>
-        <form>
-          <label htmlFor="search">Pesquise:</label>
-          <input
-            type="text"
-            placeholder="Busque aqui"
-            id="search"
-            onChange={handleSearch}
-            value={searchTerm}
-          />
-        </form>
+
       </Container>
     </HeaderContainer>
   );

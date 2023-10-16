@@ -1,7 +1,7 @@
 import { styled } from "..";
 
 export const FooterContainer = styled('footer',{
-    width:'100vw',
+
     display:'flex',
     alignItems:'center',
     justifyContent:'center',
@@ -10,5 +10,8 @@ export const FooterContainer = styled('footer',{
     height:'6rem',
     span:{
         fontSize:'2rem'
+    }, 
+     '@media(max-width:680px)':{
+        marginTop:'40px'
     }
 }) 

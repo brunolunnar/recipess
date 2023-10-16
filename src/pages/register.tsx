@@ -126,7 +126,7 @@ export default function Register() {
           </FormContainer>
         </DivContainer>
       </MainContainer>
-      {console.log(formData)}
+
       <Footer />
     </>
   );
