@@ -9,10 +9,12 @@ interface IRecipe {
     preparation: string;
     preparationTime: string;
     ingredients: string;
-    img?: string | undefined; // Torna img opcional
+    img?: string | undefined;
   };
 }
-
+interface ICardProps {
+  recipe: IRecipe;
+}
   interface IRecipeData {
     id?: string;
     name: string;
@@ -23,7 +25,13 @@ interface IRecipe {
     currentData?:undefined;
     img:string
   }
-
+  interface UpdateModalProps {
+    isOpen: boolean;
+    recipeId: string | string[] | undefined;
+    currentData: IRecipeData | undefined;
+    onUpdate: (newData: IRecipeData) => void;
+    onCancel: () => void;
+  }
   
   interface IFaunaDBResponse {
     ref: {

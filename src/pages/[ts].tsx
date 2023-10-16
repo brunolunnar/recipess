@@ -137,7 +137,7 @@ export default function Recipe() {
             </div>
             <div className="ingri">
               <h2>Tempo de preparo</h2>
-              <p>{recipe.preparationTime || ""}</p>
+              <p>{recipe.preparationTime || ""}<span>Min</span></p>
               <h2>Ingredientes</h2>
               <p>{recipe.ingredients || ""}</p>
             </div>

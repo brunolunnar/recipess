@@ -20,6 +20,13 @@ export default function Register() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+
+    if (name === "preparationTime" && !/^\d{0,2}$/.test(value)) {
+
+      return;
+    }
+
     setFormData({
       ...formData,
       [name]: value,

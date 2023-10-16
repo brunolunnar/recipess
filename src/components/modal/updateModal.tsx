@@ -1,4 +1,4 @@
-import { DeleteModalCancelButton } from "@/styles/components/Modal/deleteModal";
+import { DeleteModalButton, DeleteModalCancelButton } from "@/styles/components/Modal/deleteModal";
 import {
   ModalContainer,
   ModalContent,
@@ -9,15 +9,6 @@ import {
 } from "@/styles/components/Modal/updateModal";
 import { useState } from "react";
 import { toast } from "react-toastify";
-
-
-interface UpdateModalProps {
-  isOpen: boolean;
-  recipeId: string | string[] | undefined;
-  currentData: IRecipeData | undefined;
-  onUpdate: (newData: IRecipeData) => void;
-  onCancel: () => void;
-}
 
 export default function UpdateModal({
   isOpen,
@@ -32,7 +23,7 @@ export default function UpdateModal({
       preparation: "",
       preparationTime: "",
       ingredients: "",
-      img:""
+      img: "",
     }
   );
 
@@ -61,7 +52,6 @@ export default function UpdateModal({
   };
 
   const validateFields = () => {
-
     if (
       !newData.name ||
       !newData.preparation ||
@@ -120,13 +110,14 @@ export default function UpdateModal({
                   setNewData({ ...newData, ingredients: e.target.value })
                 }
               />
-
-              <SubmitButton type="button" onClick={handleUpdate}>
-                Atualizar
-              </SubmitButton>
-              <DeleteModalCancelButton type="button" onClick={onCancel}>
-                Cancelar
-              </DeleteModalCancelButton>
+              <div className="buttons-box">
+                <SubmitButton type="button" onClick={handleUpdate}>
+                  Atualizar
+                </SubmitButton>
+                <DeleteModalButton type="button" onClick={onCancel}>
+                  Cancelar
+                </DeleteModalButton>
+              </div>
             </form>
           </ModalContent>
         </ModalContainer>

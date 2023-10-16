@@ -19,6 +19,21 @@ export const ModalContent = styled("div", {
   padding: "20px",
   borderRadius: "4px",
   boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+  width:'25%',
+  form:{
+
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+    flexDirection:'column'
+  },
+  '.buttons-box':{
+    display:'flex',
+    gap:'30px'
+  },
+  "@media(max-width:680px)":{
+    width:'73%'
+  }
 });
 
 export const ModalTitle = styled("h2", {
@@ -33,7 +48,7 @@ export const FormLabel = styled("label", {
 });
 
 export const FormInput = styled("input", {
-  width: "100%",
+  width:'100%',
   padding: "8px",
   fontSize: "16px",
   marginBottom: "16px",

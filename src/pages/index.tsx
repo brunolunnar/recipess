@@ -6,7 +6,7 @@ import { NotProduct } from "@/components/NotProduct";
 import { Loading } from "@/components/loading/index";
 import { globalStyle } from "@/styles/global";
 import { MainContainer } from "@/styles/main";
-
+import Link from "next/link";
 globalStyle();
 
 function Home() {
@@ -50,7 +50,7 @@ function Home() {
           <>
             <form>
               <input
-              className="search"
+                className="search"
                 type="text"
                 placeholder="Busque aqui uma receita"
                 id="search"
@@ -59,9 +59,13 @@ function Home() {
               />
             </form>
             <div className="box">
-              {filteredRecipes.map((recipe) => (
-                <Card key={recipe.id} recipe={recipe} />
-              ))}
+              {filteredRecipes.length === 0 ? (
+                <p>Receita não encontrada ou não cadastrada. <Link href={'/register'}> Clique aqui para efetuar o cadastro.</Link></p>
+              ) : (
+                filteredRecipes.map((recipe) => (
+                  <Card key={recipe.id} recipe={recipe} />
+                ))
+              )}
             </div>
           </>
         )}

@@ -35,6 +35,7 @@ export const CardContainer = styled("div", {
     borderRadius: "50%",
     position: "absolute",
     top: "40%",
+    border:'2px solid '
   },
   ".box": {
     display: "flex",
@@ -49,6 +50,7 @@ export const CardContainer = styled("div", {
   },
   p: {
     fontFamily: "Jua",
+    color:'$white'
   },
   a: {
     fontFamily: "Just Another Hand",
@@ -56,4 +58,9 @@ export const CardContainer = styled("div", {
     fontSize: "2.4rem",
     fontWeight: "500",
   },
+  span:{
+   fontSize:'1rem',
+   color:'black'
+  }
+
 });
