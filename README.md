@@ -16,7 +16,7 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-##Rotas 
+## Routes for api consumption (faunaDB)
 ```
 POST: http://localhost:3000/api/createRecipe
 GET: http://localhost:3000/api/getRecipe
