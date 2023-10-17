@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { toast } from "react-toastify";
+import { DeleteModalCancelButton } from "@/styles/components/Modal/deleteModal";
 import {
   ModalContainer,
   ModalContent,
@@ -8,7 +7,11 @@ import {
   FormInput,
   SubmitButton,
 } from "@/styles/components/Modal/updateModal";
-import { DeleteModalButton } from "@/styles/components/Modal/deleteModal";
+import { useState } from "react";
+import { toast } from "react-toastify";
+
+
+
 
 export default function UpdateModal({
   isOpen,
@@ -23,27 +26,23 @@ export default function UpdateModal({
       preparation: "",
       preparationTime: "",
       ingredients: "",
-      img: "",
+      img:"",
     }
   );
-
-  const [newImage, setNewImage] = useState<string>("");
 
   const handleUpdate = async () => {
     if (validateFields()) {
       try {
-        const updatedData = { ...newData, img: newImage };
-
         const response = await fetch(`/api/updateRecipe/${recipeId}`, {
           method: "PATCH",
-          body: JSON.stringify(updatedData),
+          body: JSON.stringify(newData),
           headers: {
             "Content-Type": "application/json",
           },
         });
 
         if (response.ok) {
-          onUpdate(updatedData);
+          onUpdate(newData);
         } else {
           console.error("Erro ao atualizar receita.");
         }
@@ -56,22 +55,17 @@ export default function UpdateModal({
   };
 
   const validateFields = () => {
+
     if (
       !newData.name ||
       !newData.preparation ||
-      !isValidPreparationTime(newData.preparationTime) ||
-      !newData.ingredients ||
-      !newImage
+      !newData.preparationTime ||
+      !newData.ingredients
     ) {
-      toast.error("Todos os campos devem ser preenchidos corretamente");
+      toast.error("Todos os campos devem ser preenchidos");
       return false;
     }
     return true;
-  };
-
-  const isValidPreparationTime = (time: string) => {
- 
-    return /^\d{2}$/.test(time);
   };
 
   return (
@@ -101,18 +95,14 @@ export default function UpdateModal({
                 }
               />
 
-              <FormLabel htmlFor="preparationTime">Tempo de Preparo (Minutos)</FormLabel>
+              <FormLabel htmlFor="preparationTime">Tempo de Preparo</FormLabel>
               <FormInput
                 type="text"
                 id="preparationTime"
                 value={newData.preparationTime}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (/^\d{0,2}$/.test(value)) {
-                    // Use a expressão regular para verificar
-                    setNewData({ ...newData, preparationTime: value });
-                  }
-                }}
+                onChange={(e) =>
+                  setNewData({ ...newData, preparationTime: e.target.value })
+                }
               />
 
               <FormLabel htmlFor="ingredients">Ingredientes</FormLabel>
@@ -125,22 +115,12 @@ export default function UpdateModal({
                 }
               />
 
-              <FormLabel htmlFor="newImage">Nova imagem da receita</FormLabel>
-              <FormInput
-                type="text"
-                id="newImage"
-                value={newImage}
-                onChange={(e) => setNewImage(e.target.value)}
-              />
-
-              <div className="buttons-box">
-                <SubmitButton type="button" onClick={handleUpdate}>
-                  Atualizar
-                </SubmitButton>
-                <DeleteModalButton type="button" onClick={onCancel}>
-                  Cancelar
-                </DeleteModalButton>
-              </div>
+              <SubmitButton type="button" onClick={handleUpdate}>
+                Atualizar
+              </SubmitButton>
+              <DeleteModalCancelButton type="button" onClick={onCancel}>
+                Cancelar
+              </DeleteModalCancelButton>
             </form>
           </ModalContent>
         </ModalContainer>

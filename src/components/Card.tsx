@@ -1,9 +1,6 @@
 import { CardContainer } from "@/styles/components/Card";
 import Image from "next/image";
-import Link from "next/link";
-import Bolo from "@/assets/img/bolo.jpg";
-
-
+import Link from "next/link";;
 
 export const Card = ({ recipe }: ICardProps) => {
   return (

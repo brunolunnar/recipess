@@ -1,12 +1,15 @@
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { FormContainer } from "@/styles/components/Form";
-import { globalStyle } from "@/styles/global";
-import { DivContainer, MainContainer } from "@/styles/main";
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import Input from "@/components/input";
+import { globalStyle } from "@/styles/global";
+import { FormContainer } from "@/styles/components/Form";
+import { MainContainer, DivContainer } from "@/styles/main";
+import { submitRecipe } from "@/utils";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { Toastify } from "@/components/toast";
+import "react-toastify/dist/ReactToastify.css";
 
 globalStyle();
-
 export default function Register() {
   const [formData, setFormData] = useState({
     img: "",
@@ -15,15 +18,12 @@ export default function Register() {
     preparationTime: "",
     ingredients: "",
   });
-  const [alertMessage, setAlertMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-
     if (name === "preparationTime" && !/^\d{0,2}$/.test(value)) {
-
       return;
     }
 
@@ -35,106 +35,64 @@ export default function Register() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (
-      formData.name === "" ||
-      formData.preparation === "" ||
-      formData.preparationTime === "" ||
-      formData.ingredients === ""
-    ) {
-      setAlertMessage("Por favor, preencha todos os campos.");
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch("/api/createRecipe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        console.log("Receita cadastrada com sucesso!");
-        setAlertMessage("Receita cadastrada com sucesso!");
-        setFormData({
-          img: "",
-          name: "",
-          preparation: "",
-          preparationTime: "",
-          ingredients: "",
-        });
-      } else {
-        console.error("Erro ao cadastrar receita.");
-        setAlertMessage("Erro ao cadastrar receita.");
-      }
-    } catch (error) {
-      console.error("Erro na requisição:", error);
-      setAlertMessage("Erro na requisição.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    submitRecipe(formData, setFormData, setIsSubmitting);
   };
-
   return (
     <>
       <Header />
       <MainContainer>
         <DivContainer>
           <h1>Registre aqui sua receita! &#128523;</h1>
-          {alertMessage && <p>{alertMessage}</p>}
           <FormContainer onSubmit={handleSubmit}>
-            <label htmlFor="name">Nome</label>
-            <input
+            <Input
+              label="Nome"
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
             />
-
-            <label htmlFor="preparation">Modo de preparo</label>
-            <input
+            <Input
+              label="Modo de preparo"
               type="text"
               name="preparation"
               value={formData.preparation}
               onChange={handleChange}
             />
-
-            <label htmlFor="img">Foto do produto</label>
-            <input
+            <Input
+              label="Foto do produto"
               type="text"
               name="img"
               value={formData.img}
               onChange={handleChange}
             />
-
-            <label htmlFor="preparationTime">Tempo de Preparo</label>
-            <input
+            <Input
+              label="Tempo de Preparo"
               type="text"
               name="preparationTime"
               value={formData.preparationTime}
               onChange={handleChange}
             />
-
-            <label htmlFor="ingredients">Ingredientes</label>
-            <input
+            <Input
+              label="Ingredientes"
               type="text"
               name="ingredients"
               value={formData.ingredients}
               onChange={handleChange}
             />
-
             <button type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Aguarde..." : "Cadastrar Receita"}
             </button>
           </FormContainer>
         </DivContainer>
       </MainContainer>
-
       <Footer />
+      <Toastify/>
     </>
   );
 }
+
+
+
+
+
+
